@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Miraculous Ladybug & Cat Noir</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel='manifest' href='manifest.webmanifest'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @media only screen and (orientation:landscape){
+            #turn{ display:none; }
+        }
+        @media only screen and (orientation:portrait){
+            #turn{ display:block; }
+        }
+        /* Style dla odtwarzacza Video.js */
+        .vjs-default-skin .vjs-control-bar {
+            display: none; /* Ukrycie paska kontrolnego */
+        }
+        .vjs-default-skin .vjs-progress-control {
+            display: none; /* Ukrycie paska postępu */
+        }
+        .vjs-default-skin .vjs-current-time-display,
+        .vjs-default-skin .vjs-duration-display {
+            display: none; /* Ukrycie czasu trwania i aktualnego czasu odtwarzania */
+        }
+        .vjs-default-skin .vjs-big-play-button {
+            display: none; /* Ukrycie przycisku odtwarzania */
+        }
+        .vjs-default-skin .vjs-live-control {
+            display: none; /* Ukrycie informacji o odtwarzaniu na żywo */
+        }
+        .vjs-default-skin .vjs-volume-menu-button {
+            display: none; /* Ukrycie przycisku ustawień głośności */
+        }
+        .vjs-default-skin .vjs-fullscreen-control {
+            display: none; /* Ukrycie przycisku pełnoekranowego */
+        }
+        .vjs-default-skin .vjs-menu-button-inline {
+            display: none; /* Ukrycie menu opcji */
+        }
+    </style>
+</head>
+<body onkeydown="key()" onload="load_video()" class="naoSelecionavel">
+
+    <div style="position:fixed; height:100%; width:100%; background-color: black;top:0;left:0; z-index:999; opacity: 0.8;" id="turn">
+        <img style="position: absolute;margin: auto;top: 0;left: 0;right: 0;bottom: 0; width:100%;" src="Animação-de-Rotação.gif" /><br>
+    </div>
+
+    <div id="video-container">
+        <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" preload="auto" width="640" height="360">
+            <!-- Usuwamy src tag -->
+        </video>
+    </div>
+
+    <div onmousemove="hover()" id="content" class="content">
+        <div class="chrome">
+            <input type="range" min="0" onchange="video_time_update();hover();" oninput="video_time_update();hover()" value="0" id="video_slider"/>
+        </div>
+        <div style="position:absolute;bottom:10px;">
+            <i id="play" onclick="play()" class="material-icons" style="font-size: 40px;padding: 10px;">pause</i>
+            <i onclick="replay(10)" class="material-icons" style="font-size: 40px;padding: 10px;">replay_10</i>
+            <i onclick="replay(5)" class="material-icons" style="font-size: 40px;padding: 10px;">replay_5</i>
+            <i id="volume" onclick="volume()" class="material-icons" style="font-size: 40px;padding: 10px;">volume_up</i>
+            <span style="font-weight: bold;position:absolute;bottom:10px;white-space: nowrap;padding: 10px;" id="nome">Miraculous Ladybug & Cat Noir</span>
+        </div>
+        <div style="right: 10px;position:absolute;bottom:10px;">
+            <div class="tooltip"><i class="material-icons">
+                    <span class="tooltiptext">
+            </div>
+            <i class="material-icons" style="font-size: 40px;padding: 10px;">subtitles</i>
+            <i id="full" onclick="full()" class="material-icons" style="font-size: 40px;padding: 10px;">fullscreen</i>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        var video = document.getElementById('myVideo');
+        if(Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource('https://cdn.videas.fr/v-medias/s4/hlsv1/fc/af/fcaf6722-8ea9-4365-a5d1-bf52d878ef5a/1080p.m3u8');
+            hls.attachMedia(video);
+        }
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = 'https://cdn.videas.fr/v-medias/s4/hlsv1/fc/af/fcaf6722-8ea9-4365-a5d1-bf52d878ef5a/1080p.m3u8';
+        }
+    </script>
+    <script src="vibra.js"></script>
+    <script src="js.js"></script>
+
+</body>
+</html>
